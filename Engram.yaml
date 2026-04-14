@@ -1,0 +1,41 @@
+apiVersion: catalog.bubustack.io/v1alpha1
+kind: EngramTemplate
+metadata:
+  name: text-emitter
+  annotations:
+    registry.bubustack.io/maturity: experimental
+spec:
+  version: 0.1.0
+  description: "Emits a one-time text message when the stream starts."
+  image: ghcr.io/bubustack/text-emitter-engram:0.1.0
+  supportedModes:
+    - deployment
+    - job
+  configSchema:
+    type: object
+    additionalProperties: false
+    properties:
+      message:
+        type: string
+        description: "Text message to emit."
+        default: "Hello! How can I help you today?"
+      enabled:
+        type: boolean
+        description: "Enable or disable text emission."
+        default: true
+      delayMs:
+        type: integer
+        description: "Optional delay before emitting text (ms)."
+        default: 0
+  inputSchema:
+    type: object
+    additionalProperties: true
+  outputSchema:
+    type: object
+    properties:
+      type:
+        type: string
+        description: "Message type marker."
+      text:
+        type: string
+        description: "Emitted text."
